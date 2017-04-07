@@ -88,7 +88,7 @@ objR , imgR, cameraMatrix2 , distCoeffs2 = pickle.load(R)
 L.close()
 R.close()
 
-srcL = cv2.imread('C:/sers/fsg/Github/Both/imgL0.jpg',1)
+srcL = cv2.imread('C:/Users/fsg/Github/Both/imgL0.jpg',1)
 stereo_criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 100, 1e-5)
 
 
@@ -116,19 +116,23 @@ xr,yr,wr,hr = ROI2
 x = min([xl,xr])
 y = min([yl,yr])
 w = max([wl,wr])
-h = max([hl,hr])
+h = max([hl,hr])-130
 
 dstR = dstR[yr:yr+h,x:x+w]
 dstL = dstL[yl:yl+h,x:x+w]
 
-i = 0
-while True:
-    cv2.imshow('dstL',dstL[i:i+5])
-    cv2.imshow('dstR',dstR[i:i+5])
-    if cv2.waitKey(1) & 0xFF == ord('n'):
-        i+=1
-    elif cv2.waitKey(1) & 0xFF == ord('p'):
-        i-=1
+# i = 0
+# while True:
+#     cv2.imshow('dstL',dstL[i:i+5])
+#     cv2.imshow('dstR',dstR[i:i+5])
+#     if cv2.waitKey(1) & 0xFF == ord('n'):
+#         i+=1
+#     elif cv2.waitKey(1) & 0xFF == ord('p'):
+#         i-=1
+
+cv2.imshow('dstL',dstL)
+cv2.imshow('dstR',dstR)
+cv2.waitKey(0)
 
 print(dstL.shape)
 print(dstR.shape)
