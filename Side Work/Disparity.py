@@ -108,6 +108,8 @@ start_index = find_start_index(B,G,R,imgL)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
+
+
 class Disparity:
 
     def __init__(self,minDisparity = None , maxDisparity = None , windowSize = None):
@@ -115,15 +117,19 @@ class Disparity:
         self.maxDisparity = maxDisparity
         self.windowSize = windowSize
 
-    def compute(imgL , imgR):
+    def compute(self,imgL , imgR):
         col = imgR[0:1,0:]
-        B,G,R = find_col_BGR(col)
-        start_index = find_start_index(B,G,R,imgL)
+        B,G,R = self.find_col_BGR(col)
+        start_index = self.find_start_index(B,G,R,imgL)
         temp = imgL[0:,start_index:]
-        
+        for i in range((self.windowSize-1)/2,len(temp)-((self.windowSize-1)/2)+1):
+            for j in range((self.windowSize-1)/2,len(temp[0])-((self.windowSize-1)/2)+1):
+                y , x = self.find_closest_match(i,j+start_index,imgR)# y is the row element and x is the column element of the closest matched pixel
+
+
 
     #This function will take a column as input and return the sum of blue, green and red components
-    def find_col_BGR(col):
+    def find_col_BGR(self,col):
         B = 0
         G = 0
         R = 0
@@ -140,7 +146,7 @@ class Disparity:
         return B,G,R
 
     # Funtion to find the column i.e. left most closest value to BGR input given
-    def find_start_index(B,G,R,imgL):
+    def find_start_index(self,B,G,R,imgL):
         index = 0
 
         for i in range(300):
@@ -186,3 +192,29 @@ class Disparity:
 
         index = i
         return index
+
+    # Funtion to find the closest match of the input pixel in its corresponding row with min and max disparity as the bounds of search
+    def find_closest_match(self,row,column,imgR):
+        flag = 0
+        for j in range(column-self.minDisparity,column-(self.maxDisparity+1),-1):
+            if j<(self.windowSize+1)/2:
+                break
+            else
+                ADC = self.AD_Census(row,j,imgR)
+
+            if flag == 0:
+                ADC_closest = ADC
+                flag = 1
+                row_found = row
+                column_found = j
+            else:
+                if ADC < ADC_closest:# We are taking the assumption that the pixel which is most similar will give the least value of ADC
+                    ADC_closest = ADC
+                    row_found = row
+                    column_found = j
+
+        return row_found,column_found
+
+    def AD_Census(self):
+        #Define the AD_Census method here
+

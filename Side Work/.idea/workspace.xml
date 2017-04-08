@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/File1.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+              <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -70,8 +70,8 @@
       <file leaf-file-name="Disparity.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Disparity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2225131">
-              <caret line="122" column="8" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.91099477">
+              <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
               <folding>
                 <element signature="e#321#331#0" expanded="true" />
               </folding>
@@ -91,10 +91,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/File1.py" />
         <option value="$PROJECT_DIR$/File2.py" />
         <option value="$PROJECT_DIR$/File3.py" />
         <option value="$PROJECT_DIR$/File4.py" />
+        <option value="$PROJECT_DIR$/File1.py" />
         <option value="$PROJECT_DIR$/Disparity.py" />
       </list>
     </option>
@@ -157,7 +157,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/untitled" />
   </component>
-  <component name="RunManager" selected="Python.Disparity">
+  <component name="RunManager" selected="Python.File1">
     <configuration default="false" name="File4" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -188,6 +188,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Side Work" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Disparity.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="File1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Side Work" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/File1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -314,14 +331,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python.File4" />
       <item index="1" class="java.lang.String" itemvalue="Python.Disparity" />
+      <item index="2" class="java.lang.String" itemvalue="Python.File1" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.Disparity" />
-        <item index="1" class="java.lang.String" itemvalue="Python.File4" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Python.File1" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Disparity" />
+        <item index="2" class="java.lang.String" itemvalue="Python.File4" />
       </list>
     </recent_temporary>
   </component>
@@ -425,14 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/File1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/File2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -463,10 +474,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/File1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="144" column="16" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Disparity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2225131">
-          <caret line="122" column="8" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.91099477">
+          <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
           <folding>
             <element signature="e#321#331#0" expanded="true" />
           </folding>

@@ -138,3 +138,8 @@ cv2.imwrite(pathL,frameL)
 cv2.imwrite(pathR,frameR)
 '''
 
+import cv2
+
+imgL = cv2.imread('dstL.jpg',1)
+
+print(imgL[1][-8])
