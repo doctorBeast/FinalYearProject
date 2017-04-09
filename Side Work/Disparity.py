@@ -11,6 +11,7 @@ WindowSize
 
 import cv2
 import numpy as np
+import math
 
 #This function will take a column as input and return the sum of blue, green and red components
 def find_col_BGR(col):
@@ -112,10 +113,12 @@ start_index = find_start_index(B,G,R,imgL)
 
 class Disparity:
 
-    def __init__(self,minDisparity = None , maxDisparity = None , windowSize = None):
+    def __init__(self,minDisparity = None , maxDisparity = None , windowSize = None, lambda_Census = None,lambda_AD = None):
         self.minDisparity = minDisparity
         self.maxDisparity = maxDisparity
         self.windowSize = windowSize
+        self.lambda_Census = lambda_Census
+        self.lambda_AD = lambda_AD
 
     def compute(self,imgL , imgR):
         col = imgR[0:1,0:]
@@ -124,7 +127,7 @@ class Disparity:
         temp = imgL[0:,start_index:]
         for i in range((self.windowSize-1)/2,len(temp)-((self.windowSize-1)/2)+1):
             for j in range((self.windowSize-1)/2,len(temp[0])-((self.windowSize-1)/2)+1):
-                y , x = self.find_closest_match(i,j+start_index,imgR)# y is the row element and x is the column element of the closest matched pixel
+                y , x = self.find_closest_match(i,j+start_index,imgL,imgR)# y is the row element and x is the column element of the closest matched pixel
 
 
 
@@ -194,13 +197,13 @@ class Disparity:
         return index
 
     # Funtion to find the closest match of the input pixel in its corresponding row with min and max disparity as the bounds of search
-    def find_closest_match(self,row,column,imgR):
+    def find_closest_match(self,row,column,imgL,imgR):
         flag = 0
         for j in range(column-self.minDisparity,column-(self.maxDisparity+1),-1):
             if j<(self.windowSize+1)/2:
                 break
             else
-                ADC = self.AD_Census(row,j,imgR)
+                ADC = self.AD_Census(row,column,imgL,row,j,imgR)
 
             if flag == 0:
                 ADC_closest = ADC
@@ -215,6 +218,24 @@ class Disparity:
 
         return row_found,column_found
 
-    def AD_Census(self):
-        #Define the AD_Census method here
+    def AD_Census(self,rowL,colL,imgL,rowR,colR,imgR):
+        # First is the AD method
+        cost_AD = cal_AD(rowL,colL,imgL,rowR,colR,imgR)
+        # Second is the Census transform
+        cost_Census = cal_Census(rowL,colL,imgL,rowR,colR,imgR)
 
+        cost_Total = (1-math.exp(-(cost_Census/self.lambda_Census)))+(1-math.exp(-(cost_AD/self.lambda_AD)))
+
+        return cost_Total
+
+    def cal_AD(self,rowL,colL,imgL,rowR,colR,imgR):
+        cost = 0
+        for i in range(3):
+            cost = imgL[rowL][colL][i] - imgR[rowR][colR][i]
+
+        cost /= 3
+
+        return cost
+
+    def cal_Census(self,rowL,colL,imgL,rowR,colR,imgR):
+        
