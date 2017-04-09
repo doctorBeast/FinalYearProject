@@ -138,8 +138,13 @@ cv2.imwrite(pathL,frameL)
 cv2.imwrite(pathR,frameR)
 '''
 
+import Disparity
 import cv2
 
+obj = Disparity.Disparity(minDisparity = 15 , maxDisparity = 200 , windowSize = 11, lambda_Census = 30,lambda_AD = 10)
 imgL = cv2.imread('dstL.jpg',1)
+imgR = cv2.imread('dstR.jpg',1)
 
-print(imgL[1][-8])
+disp = obj.compute(imgL,imgR)
+
+print(type(disp))

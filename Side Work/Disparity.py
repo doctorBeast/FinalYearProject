@@ -7,7 +7,7 @@ MaxDisparity
 MinDisparity
 WindowSize
 
-'''
+
 
 import cv2
 import numpy as np
@@ -109,11 +109,15 @@ start_index = find_start_index(B,G,R,imgL)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
+'''
 
 
 class Disparity:
 
     def __init__(self,minDisparity = None , maxDisparity = None , windowSize = None, lambda_Census = None,lambda_AD = None):
+        self.time = __import__('time')
+        self.math = __import__('math')
+        self.np = __import__('numpy')
         self.minDisparity = minDisparity
         self.maxDisparity = maxDisparity
         self.windowSize = windowSize
@@ -121,14 +125,20 @@ class Disparity:
         self.lambda_AD = lambda_AD
 
     def compute(self,imgL , imgR):
+        start_time = self.time.time()
         col = imgR[0:1,0:]
         B,G,R = self.find_col_BGR(col)
         start_index = self.find_start_index(B,G,R,imgL)
         temp = imgL[0:,start_index:]
-        for i in range((self.windowSize-1)/2,len(temp)-((self.windowSize-1)/2)+1):
-            for j in range((self.windowSize-1)/2,len(temp[0])-((self.windowSize-1)/2)+1):
+        disp = self.np.zeros((temp.shape))
+        for i in range(int((self.windowSize-1)/2),len(temp)-(int((self.windowSize-1)/2))+1):
+            print(i,'    ',self.time.time()-start_time)
+            for j in range(int((self.windowSize-1)/2),len(temp[0])-int(((self.windowSize-1)/2))+1):
                 y , x = self.find_closest_match(i,j+start_index,imgL,imgR)# y is the row element and x is the column element of the closest matched pixel
+                print(j+start_index,'#####',self.time.time()-start_time)
+                disp[i][j] = j+start_index-x
 
+        return disp
 
 
     #This function will take a column as input and return the sum of blue, green and red components
@@ -155,7 +165,7 @@ class Disparity:
         for i in range(300):
             #This loop is for going column wise to check for the most similar left column
             col = imgL[i:i+1,0:]
-            b,g,r = find_col_BGR(col)
+            b,g,r = self.find_col_BGR(col)
 
 
             if i== 0 :
@@ -185,13 +195,14 @@ class Disparity:
                     flag3 = 0
 
             if flag1 == 1 and flag2 == 1 and flag3 ==1:
-                print('all matches found:',i)
-                print(diff1)
-                print(diff2)
-                print(diff3)
+                # print('all matches found:',i)
+                # print(diff1)
+                # print(diff2)
+                # print(diff3)
                 break
             elif flag1 == 1 and flag2 == 1 or flag1 == 1 and flag3 == 1 or flag2 == 1 and flag3 == 1:
-                print('two matches found:',i)
+                # print('two matches found:',i)
+                pass
 
         index = i
         return index
@@ -199,10 +210,12 @@ class Disparity:
     # Funtion to find the closest match of the input pixel in its corresponding row with min and max disparity as the bounds of search
     def find_closest_match(self,row,column,imgL,imgR):
         flag = 0
+        row_found = row
+        column_found = column
         for j in range(column-self.minDisparity,column-(self.maxDisparity+1),-1):
-            if j<(self.windowSize+1)/2:
+            if j<int((self.windowSize+1)/2):
                 break
-            else
+            else:
                 ADC = self.AD_Census(row,column,imgL,row,j,imgR)
 
             if flag == 0:
@@ -220,22 +233,34 @@ class Disparity:
 
     def AD_Census(self,rowL,colL,imgL,rowR,colR,imgR):
         # First is the AD method
-        cost_AD = cal_AD(rowL,colL,imgL,rowR,colR,imgR)
+        cost_AD = self.cal_AD(rowL,colL,imgL,rowR,colR,imgR)
         # Second is the Census transform
-        cost_Census = cal_Census(rowL,colL,imgL,rowR,colR,imgR)
+        cost_Census = self.cal_Census(rowL,colL,imgL,rowR,colR,imgR)
 
-        cost_Total = (1-math.exp(-(cost_Census/self.lambda_Census)))+(1-math.exp(-(cost_AD/self.lambda_AD)))
+        cost_Total = (1-self.math.exp(-(cost_Census/self.lambda_Census)))+(1-self.math.exp(-(cost_AD/self.lambda_AD)))
 
         return cost_Total
 
     def cal_AD(self,rowL,colL,imgL,rowR,colR,imgR):
         cost = 0
         for i in range(3):
-            cost = imgL[rowL][colL][i] - imgR[rowR][colR][i]
+            cost = int(imgL[rowL][colL][i]) - int(imgR[rowR][colR][i])
 
         cost /= 3
 
         return cost
 
     def cal_Census(self,rowL,colL,imgL,rowR,colR,imgR):
-        
+        dist = 0
+        cpL = imgL[rowL][colL]
+        cpR = imgR[rowR][colR]
+
+        for i in range(int(-(self.windowSize-1)/2),int((self.windowSize-1)/2)):
+            for j in range(int(-(self.windowSize-1)/2),int((self.windowSize-1)/2)):
+                pL = imgL[rowL+i][colL+j]
+                pR = imgR[rowR+i][colR+j]
+                for k in range(3):
+                    if ((int(cpL[k])-int(pL[k]))*(int(cpR[k])-int(pR[k])))<0:
+                        dist+=1
+
+        return dist
