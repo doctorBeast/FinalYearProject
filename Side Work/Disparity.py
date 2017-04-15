@@ -126,11 +126,21 @@ class Disparity:
 
     def compute(self,imgL , imgR):
         start_time = self.time.time()
+        
         col = imgR[0:1,0:]
+        print(type(col))
+        print(col.shape)
+        print(type(col.shape))
+        print(col.dtype)
+        
+
         B,G,R = self.find_col_BGR(col)
         start_index = self.find_start_index(B,G,R,imgL)
         temp = imgL[0:,start_index:]
         disp = self.np.zeros((temp.shape))
+        print(type(disp))
+        print(disp.dtype)
+        
         for i in range(int((self.windowSize-1)/2),len(temp)-(int((self.windowSize-1)/2))+1):
             print(i,'    ',self.time.time()-start_time)
             for j in range(int((self.windowSize-1)/2),len(temp[0])-int(((self.windowSize-1)/2))+1):
@@ -238,7 +248,10 @@ class Disparity:
         cost_Census = self.cal_Census(rowL,colL,imgL,rowR,colR,imgR)
 
         cost_Total = (1-self.math.exp(-(cost_Census/self.lambda_Census)))+(1-self.math.exp(-(cost_AD/self.lambda_AD)))
-
+        print(type(cost_AD))
+        print(type(cost_Census))
+        print(type(cost_Total))
+        exit()
         return cost_Total
 
     def cal_AD(self,rowL,colL,imgL,rowR,colR,imgR):
