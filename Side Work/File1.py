@@ -145,10 +145,17 @@ import pickle
 imgL = cv2.imread('dstL.jpg',1)
 imgR = cv2.imread('dstR.jpg',1)
 
-disp = Disparity.compute(imgL,imgR)
-# with open('disp_data.pickle','wb') as f:
-#     pickle.dump([disp],f)
-#
-# f.close()
+disp,val = Disparity.compute(imgL,imgR)
+with open('disp_data.pickle','wb') as f:
+    pickle.dump(disp,f)
+
+f.close()
+
+with open('ADC_value.pickle','wb') as g:
+    pickle.dump(val,g)
+
+g.close()
 
 print(type(disp))
+
+print(type(val))

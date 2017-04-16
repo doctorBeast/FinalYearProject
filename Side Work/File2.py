@@ -14,6 +14,7 @@
 # stream.close()
 # p.terminate()
 
+'''
 import audioop
 import math
 import pyaudio
@@ -56,3 +57,25 @@ waveFile.setsampwidth(audio.get_sample_size(FORMAT))
 waveFile.setframerate(RATE)
 waveFile.writeframes(b''.join(frames))
 waveFile.close()
+'''
+
+import pickle
+import numpy
+import cv2
+
+# numpy.set_printoptions(threshold = numpy.nan)
+# f = open('disp_data.pickle','rb')
+# disp = pickle.load(f)
+
+# print(type(disp))
+# print(disp.shape)
+# print(disp.dtype)
+# cv2.imshow('Disparity',disp)
+# cv2.waitKey(0)
+# cv2.destoryAllWindows()
+
+
+hj = numpy.zeros(shape = (200,200),dtype = numpy.uint8)
+cv2.imshow('Check',hj)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

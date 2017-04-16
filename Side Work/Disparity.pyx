@@ -3,31 +3,36 @@ import numpy
 cimport numpy
 import math
 import time
+import pickle
 
 cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
-minDisparity = 10
-maxDisparity = 200
-windowSize = 10
+minDisparity = 20
+maxDisparity = 180
+windowSize = 17       #Window size must be always taken odd
 lambda_Census = 30
 lambda_AD = 10
 
-cpdef numpy.ndarray[numpy.uint8_t,ndim = 3] compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
-    cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col,temp,disp
+
+cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
+    cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col,temp
+    cdef numpy.ndarray[numpy.uint8_t,ndim = 2] disp,ADC_val
     cdef int B,G,R,start_index,i,j,y,x
     start_time = time.time()
     col = imgR[0:1,0:]
     B,G,R = find_col_BGR(col)                            #Define this function
     start_index = find_start_index(B,G,R,imgL)           #Define this function
     temp = imgL[0:,start_index:]
-    disp = numpy.zeros((temp.shape[0],temp.shape[1],temp.shape[2]),numpy.uint8)
+    disp = numpy.zeros(shape = (temp.shape[0],temp.shape[1]),dtype = numpy.uint8)
+    ADC_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]),dtype = numpy.uint8)
     for i in range(int((windowSize-1)/2),len(temp)-(int((windowSize-1)/2))+1):
         print(i,'      ',time.time()-start_time)
         for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
-            y , x = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
+            y , x , val = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
             disp[i][j] = j+start_index-x
+            ADC_val[i][j] = val
 
-    return disp
+    return disp,ADC_val
 
 cdef find_col_BGR(numpy.ndarray[numpy.uint8_t,ndim = 3] col):
     cdef int B,G,R,i
@@ -101,7 +106,7 @@ cdef int find_start_index(int B,int G,int R,numpy.ndarray[numpy.uint8_t,ndim = 3
 cdef find_closest_match(int row,int column,numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
     cdef int flag,row_found,column_found,j
     cdef float ADC,ADC_closest
-
+    ADC_closest = 0
     flag = 0
     row_found = row
     column_found = column
@@ -122,7 +127,7 @@ cdef find_closest_match(int row,int column,numpy.ndarray[numpy.uint8_t,ndim = 3]
                 row_found = row
                 column_found = j
 
-    return row_found,column_found
+    return row_found,column_found,ADC_closest
 
 cdef float AD_Census(int rowL,int colL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,int rowR,int colR,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
     cdef float cost_AD,cost_Total
