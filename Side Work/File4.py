@@ -88,7 +88,7 @@ objR , imgR, cameraMatrix2 , distCoeffs2 = pickle.load(R)
 L.close()
 R.close()
 
-srcL = cv2.imread('C:/Users/fsg/Github/Both/imgL0.jpg',1)
+srcL = cv2.imread('C:/Users/fsg/Github/Both/imgL3.jpg',1)
 stereo_criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 100, 1e-5)
 
 
@@ -107,7 +107,7 @@ xl,yl,wl,hl = ROI1
 # cv2.imshow('Final',dst)
 # cv2.waitKey(0)
 
-srcR = cv2.imread('C:/Users/fsg/Github/Both/imgR0.jpg',1)
+srcR = cv2.imread('C:/Users/fsg/Github/Both/imgR3.jpg',1)
 map1 , map2 = cv2.initUndistortRectifyMap(cameraMatrix = cameraMatrix2, distCoeffs = distCoeffs2, R = R2, newCameraMatrix = P2, size = (480,640),m1type = cv2.CV_32FC1)
 dstR = cv2.remap(src = srcR, map1 = map1, map2 = map2, interpolation = cv2.INTER_LINEAR)
 
@@ -137,8 +137,8 @@ cv2.waitKey(0)
 print(dstL.shape)
 print(dstR.shape)
 
-cv2.imwrite('dstL.jpg',dstL)
-cv2.imwrite('dstR.jpg',dstR)
+cv2.imwrite('dstImages/dstL3.jpg',dstL)
+cv2.imwrite('dstImages/dstR3.jpg',dstR)
 
 cv2.destroyAllWindows()
 
