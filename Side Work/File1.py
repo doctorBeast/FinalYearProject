@@ -83,7 +83,8 @@ del(camera)
 stream.stop_stream()
 stream.close()
 '''
-'''
+
+
 #capturing images for both cameras
 import cv2
 
@@ -115,7 +116,7 @@ for i in range(60):
 
 del(camera1,camera2)
 
-'''
+
 
 '''
 import cv2
@@ -138,6 +139,7 @@ cv2.imwrite(pathL,frameL)
 cv2.imwrite(pathR,frameR)
 '''
 
+'''
 import Disparity
 import cv2
 import pickle
@@ -159,3 +161,4 @@ g.close()
 print(type(disp))
 
 print(type(val))
+'''

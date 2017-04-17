@@ -9,7 +9,7 @@ cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
 minDisparity = 25
 maxDisparity = 220
-windowSize = 21       #Window size must be always taken odd
+windowSize = 15       #Window size must be always taken odd
 lambda_Census = 30
 lambda_AD = 10
 
@@ -19,6 +19,8 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
     cdef numpy.ndarray[numpy.uint8_t,ndim = 2] disp
     cdef numpy.ndarray[numpy.float_t,ndim = 2] ADC_val
     cdef int B,G,R,start_index,i,j,y,x
+    cdef float val
+
     start_time = time.time()
     col = imgR[0:1,0:]
     B,G,R = find_col_BGR(col)                            #Define this function
@@ -33,7 +35,11 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
         print(i,'      ',time.time()-start_time)
         for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
             y , x , val = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
-            disp[i][j] = j+start_index-x
+            if val>0:
+                disp[i][j] = 255
+            else:
+                disp[i][j] = j+start_index-x
+            
             ADC_val[i][j] = val
 
     return disp,ADC_val

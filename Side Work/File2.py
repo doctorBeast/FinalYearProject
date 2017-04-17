@@ -65,9 +65,11 @@ import cv2
 
 def cal_distance(event,x,y,flags,param):
 	global val
+	global disp
 	if event == cv2.EVENT_LBUTTONDBLCLK:
 		print(x,y)
-		print(val[y][x])
+		print('ADC_Value',val[y][x])
+		print('Disparity Value',disp[y][x])
 
 numpy.set_printoptions(threshold = numpy.nan)
 g = open('ADC_value.pickle','rb')
