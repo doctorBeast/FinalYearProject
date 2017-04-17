@@ -142,8 +142,8 @@ import Disparity
 import cv2
 import pickle
 
-imgL = cv2.imread('dstL.jpg',1)
-imgR = cv2.imread('dstR.jpg',1)
+imgL = cv2.imread('dstImages/dstL0.jpg',1)
+imgR = cv2.imread('dstImages/dstR0.jpg',1)
 
 disp,val = Disparity.compute(imgL,imgR)
 with open('disp_data.pickle','wb') as f:

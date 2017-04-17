@@ -7,24 +7,28 @@ import pickle
 
 cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
-minDisparity = 20
-maxDisparity = 180
-windowSize = 17       #Window size must be always taken odd
+minDisparity = 25
+maxDisparity = 220
+windowSize = 21       #Window size must be always taken odd
 lambda_Census = 30
 lambda_AD = 10
 
 
 cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
-    cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col,temp
-    cdef numpy.ndarray[numpy.uint8_t,ndim = 2] disp,ADC_val
+    cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col,templ
+    cdef numpy.ndarray[numpy.uint8_t,ndim = 2] disp
+    cdef numpy.ndarray[numpy.float_t,ndim = 2] ADC_val
     cdef int B,G,R,start_index,i,j,y,x
     start_time = time.time()
     col = imgR[0:1,0:]
     B,G,R = find_col_BGR(col)                            #Define this function
     start_index = find_start_index(B,G,R,imgL)           #Define this function
+    start_index = 40
+    print(start_index)
+    
     temp = imgL[0:,start_index:]
     disp = numpy.zeros(shape = (temp.shape[0],temp.shape[1]),dtype = numpy.uint8)
-    ADC_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]),dtype = numpy.uint8)
+    ADC_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]))
     for i in range(int((windowSize-1)/2),len(temp)-(int((windowSize-1)/2))+1):
         print(i,'      ',time.time()-start_time)
         for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):

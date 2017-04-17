@@ -63,19 +63,27 @@ import pickle
 import numpy
 import cv2
 
-# numpy.set_printoptions(threshold = numpy.nan)
-# f = open('disp_data.pickle','rb')
-# disp = pickle.load(f)
+def cal_distance(event,x,y,flags,param):
+	global val
+	if event == cv2.EVENT_LBUTTONDBLCLK:
+		print(x,y)
+		print(val[y][x])
 
-# print(type(disp))
-# print(disp.shape)
-# print(disp.dtype)
-# cv2.imshow('Disparity',disp)
-# cv2.waitKey(0)
-# cv2.destoryAllWindows()
+numpy.set_printoptions(threshold = numpy.nan)
+g = open('ADC_value.pickle','rb')
+val = pickle.load(g)
+g.close()
+print(type(val))
+print(val.shape)
 
+f = open('disp_data.pickle','rb')
+disp = pickle.load(f)
+f.close()
+cv2.namedWindow('Disparity')
+cv2.setMouseCallback('Disparity',cal_distance)
 
-hj = numpy.zeros(shape = (200,200),dtype = numpy.uint8)
-cv2.imshow('Check',hj)
+print(disp.shape)
+cv2.imshow('Disparity',disp)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
