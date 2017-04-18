@@ -84,7 +84,7 @@ stream.stop_stream()
 stream.close()
 '''
 
-
+'''
 #capturing images for both cameras
 import cv2
 
@@ -115,7 +115,7 @@ for i in range(60):
     print(i)
 
 del(camera1,camera2)
-
+'''
 
 
 '''
@@ -139,21 +139,22 @@ cv2.imwrite(pathL,frameL)
 cv2.imwrite(pathR,frameR)
 '''
 
-'''
+
 import Disparity
 import cv2
 import pickle
 
-imgL = cv2.imread('dstImages/dstL0.jpg',1)
-imgR = cv2.imread('dstImages/dstR0.jpg',1)
-
+imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstL3.jpg',1)
+imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstR3.jpg',1)
+print(imgL.shape)
+print(imgR.shape)
 disp,val = Disparity.compute(imgL,imgR)
-with open('disp_data.pickle','wb') as f:
+with open('disp_data3.pickle','wb') as f:
     pickle.dump(disp,f)
 
 f.close()
 
-with open('ADC_value.pickle','wb') as g:
+with open('ADC_value3.pickle','wb') as g:
     pickle.dump(val,g)
 
 g.close()
@@ -161,4 +162,3 @@ g.close()
 print(type(disp))
 
 print(type(val))
-'''

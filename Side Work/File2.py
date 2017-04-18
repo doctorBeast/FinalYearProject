@@ -72,13 +72,13 @@ def cal_distance(event,x,y,flags,param):
 		print('Disparity Value',disp[y][x])
 
 numpy.set_printoptions(threshold = numpy.nan)
-g = open('ADC_value.pickle','rb')
+g = open('ADC25-220winSiz15img0.pickle','rb')
 val = pickle.load(g)
 g.close()
 print(type(val))
 print(val.shape)
 
-f = open('disp_data.pickle','rb')
+f = open('25-220winSiz15img0.pickle','rb')
 disp = pickle.load(f)
 f.close()
 cv2.namedWindow('Disparity')

@@ -7343,47 +7343,47 @@ PyMODINIT_FUNC PyInit_Disparity(void)
   /* "Disparity.pyx":10
  * cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
  * 
- * minDisparity = 25             # <<<<<<<<<<<<<<
- * maxDisparity = 220
+ * minDisparity = 13             # <<<<<<<<<<<<<<
+ * maxDisparity = 250
  * windowSize = 15       #Window size must be always taken odd
  */
-  __pyx_v_9Disparity_minDisparity = 25;
+  __pyx_v_9Disparity_minDisparity = 13;
 
   /* "Disparity.pyx":11
  * 
- * minDisparity = 25
- * maxDisparity = 220             # <<<<<<<<<<<<<<
+ * minDisparity = 13
+ * maxDisparity = 250             # <<<<<<<<<<<<<<
  * windowSize = 15       #Window size must be always taken odd
- * lambda_Census = 30
+ * lambda_Census = 10
  */
-  __pyx_v_9Disparity_maxDisparity = 0xDC;
+  __pyx_v_9Disparity_maxDisparity = 0xFA;
 
   /* "Disparity.pyx":12
- * minDisparity = 25
- * maxDisparity = 220
+ * minDisparity = 13
+ * maxDisparity = 250
  * windowSize = 15       #Window size must be always taken odd             # <<<<<<<<<<<<<<
- * lambda_Census = 30
- * lambda_AD = 10
+ * lambda_Census = 10
+ * lambda_AD = 4
  */
   __pyx_v_9Disparity_windowSize = 15;
 
   /* "Disparity.pyx":13
- * maxDisparity = 220
+ * maxDisparity = 250
  * windowSize = 15       #Window size must be always taken odd
- * lambda_Census = 30             # <<<<<<<<<<<<<<
- * lambda_AD = 10
+ * lambda_Census = 10             # <<<<<<<<<<<<<<
+ * lambda_AD = 4
  * 
  */
-  __pyx_v_9Disparity_lambda_Census = 30;
+  __pyx_v_9Disparity_lambda_Census = 10;
 
   /* "Disparity.pyx":14
  * windowSize = 15       #Window size must be always taken odd
- * lambda_Census = 30
- * lambda_AD = 10             # <<<<<<<<<<<<<<
+ * lambda_Census = 10
+ * lambda_AD = 4             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_v_9Disparity_lambda_AD = 10;
+  __pyx_v_9Disparity_lambda_AD = 4;
 
   /* "Disparity.pyx":1
  * import cv2             # <<<<<<<<<<<<<<

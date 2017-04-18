@@ -7,11 +7,11 @@ import pickle
 
 cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
-minDisparity = 25
-maxDisparity = 220
+minDisparity = 13
+maxDisparity = 250
 windowSize = 15       #Window size must be always taken odd
-lambda_Census = 30
-lambda_AD = 10
+lambda_Census = 10
+lambda_AD = 4
 
 
 cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
