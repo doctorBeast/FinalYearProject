@@ -66,21 +66,35 @@ import cv2
 def cal_distance(event,x,y,flags,param):
 	global val
 	global disp
+	global val_AD
+	global val_Census
+
 	if event == cv2.EVENT_LBUTTONDBLCLK:
-		print(x,y)
-		print('ADC_Value',val[y][x])
-		print('Disparity Value',disp[y][x])
+		
+		depth = (86 * 825)/disp[y][x]
+		print('Depth Value',depth)
+		print('Disparity :',disp[y][x])
+		print('ADC_Value :',val[y][x])
+		print('val_AD :',val_AD[y][x])
+		print('val_Census :',val_Census[y][x])
 
 numpy.set_printoptions(threshold = numpy.nan)
-g = open('ADC25-220winSiz15img0.pickle','rb')
+g = open('ADC_value.pickle','rb')
 val = pickle.load(g)
 g.close()
-print(type(val))
-print(val.shape)
 
-f = open('25-220winSiz15img0.pickle','rb')
+f = open('disp_data.pickle','rb')
 disp = pickle.load(f)
 f.close()
+
+f = open('val_AD.pickle','rb')
+val_AD = pickle.load(f)
+f.close()
+
+f = open('val_Census.pickle','rb')
+val_Census = pickle.load(f)
+f.close()
+
 cv2.namedWindow('Disparity')
 cv2.setMouseCallback('Disparity',cal_distance)
 

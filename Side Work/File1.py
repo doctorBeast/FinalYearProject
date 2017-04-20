@@ -144,21 +144,32 @@ import Disparity
 import cv2
 import pickle
 
-imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstL3.jpg',1)
-imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstR3.jpg',1)
+imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstLnew2.jpg',1)
+imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstRnew2.jpg',1)
+
 print(imgL.shape)
 print(imgR.shape)
-disp,val = Disparity.compute(imgL,imgR)
-with open('disp_data3.pickle','wb') as f:
+
+
+disp,val_T,val_AD,val_C = Disparity.compute(imgL,imgR)
+with open('disp_data.pickle','wb') as f:
     pickle.dump(disp,f)
 
 f.close()
 
-with open('ADC_value3.pickle','wb') as g:
-    pickle.dump(val,g)
+with open('ADC_value.pickle','wb') as f:
+    pickle.dump(val_T,f)
 
-g.close()
+f.close()
 
-print(type(disp))
+with open('val_AD.pickle','wb') as f:
+    pickle.dump(val_AD,f)
 
-print(type(val))
+f.close()
+
+with open('val_Census.pickle','wb') as f:
+    pickle.dump(val_C,f)
+
+f.close()
+
+

@@ -274,9 +274,94 @@ Resulting .ply file cam be easily viewed using MeshLab ( http://meshlab.sourcefo
 #     cv2.waitKey()
 #     cv2.destroyAllWindows()
 
-i = 0
-while True:
-  if (i+1)%10000000 == 0:
-    print(i/10000000)
+'''
+#Code to see sections of an image
 
-  i+=1
+import cv2
+import numpy
+
+imgL = cv2.imread('testL.jpg',1)
+imgR = cv2.imread('testR.jpg',1)
+i = 0
+while i <len(imgL):
+  frameL = imgL[i:i+5,0:]
+  frameR = imgR[i:i+5,0:]
+  cv2.imshow('Left',frameL)
+  cv2.imshow('Right',frameR)
+  if cv2.waitKey(0) & 0xFF == ord('m'):
+    i+=1
+  else:
+    i-=1
+
+
+cv2.destroyAllWindows()
+
+
+'''
+#Code to see corresponding pixels
+
+import cv2
+import numpy
+import pickle
+
+def find_intensity_left(event,x,y,flags,param):
+  global imgL
+  if event == cv2.EVENT_LBUTTONDBLCLK:
+    print('Left Image :',x,y)
+
+def find_intensity_right(event,x,y,flags,param):
+  global imgR
+  if event == cv2.EVENT_LBUTTONDBLCLK:
+    print('Right Image :',x,y)
+
+def find_intensity_disp(event,x,y,flags,param):
+  global disp
+  if event == cv2.EVENT_LBUTTONDBLCLK:
+    print('Disparity Image :',x,y)
+
+def find_same_color(event,x,y,flags,param):
+  global imgL,imgR
+  # imgL = imgL.astype(numpy.int16)
+  # imgR = imgR.astype(numpy.int16)
+  if event == cv2.EVENT_LBUTTONDBLCLK:
+    ref = imgL[y][x]
+    
+    for i in range(len(imgR[0])):
+      sod = 0
+      test_sample = imgR[y][i]
+      for j in range(3):
+        sod += abs(int(ref[j])-int(test_sample[j]))
+
+      avg_sod = sod/3
+      if avg_sod <10:
+        
+        for j in range(3):
+          imgR[y][i][j] = 0
+
+    # imgL = imgL.astype(numpy.uint8)
+    # imgR = imgR.astype(numpy.uint8)
+    cv2.imshow('Right',imgR)
+    cv2.waitKey(0)
+
+imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstLnew1.jpg',1)
+imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstRnew1.jpg',1)
+f = open('PickleFiles/rect15-215winSiz17.pickle','rb')
+disp = pickle.load(f)
+f.close()
+cv2.namedWindow('Left')
+cv2.setMouseCallback('Left',find_intensity_left)
+
+cv2.namedWindow('Right')
+cv2.setMouseCallback('Right',find_intensity_right)
+
+cv2.namedWindow('Disparity')
+cv2.setMouseCallback('Disparity',find_intensity_disp)
+
+cv2.imshow('Left',imgL)
+cv2.imshow('Right',imgR)
+cv2.imshow('Disparity',disp)
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+# cv2.imwrite('testL.jpg',imgL)
+# cv2.imwrite('testR.jpg',imgR)
