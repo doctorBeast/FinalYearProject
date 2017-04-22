@@ -11,9 +11,9 @@ import cython
 
 cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
-minDisparity = 15
-maxDisparity = 200
-windowSize = 11       #Window size must be always taken odd
+minDisparity = 40
+maxDisparity = 260
+windowSize = 9       #Window size must be always taken odd
 lambda_Census = 30
 lambda_AD = 10
 
@@ -22,13 +22,9 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
     cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col,templ
     cdef numpy.ndarray[numpy.uint8_t,ndim = 2] disp
     cdef numpy.ndarray[numpy.float_t,ndim = 2] ADC_val,AD_val,Census_val
-    cdef int B,G,R,start_index,i,j,y,x
+    cdef int B,G,R,start_index,i,j,y,x,num_threads,first,second
     cdef float val_T,val_AD,val_C
-
     start_time = time.time()
-#    col = imgR[0:1,0:]
-#    B,G,R = find_col_BGR(col)                            #Define this function
-#    start_index = find_start_index(B,G,R,imgL)           #Define this function
     start_index = 40
     print(start_index)
     
@@ -37,90 +33,26 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
     ADC_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]))
     AD_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]))
     Census_val = numpy.zeros(shape = (temp.shape[0],temp.shape[1]))
-    for i in range(int((windowSize-1)/2),len(temp)-(int((windowSize-1)/2))+1):
-        print(i,'      ',time.time()-start_time)
-        for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
-            y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
-            if val_T>0.6:
-                disp[i][j] = 255
-            else:
-                disp[i][j] = j+start_index-x
+    first = int((windowSize-1)/2)
+    second = len(temp)
+    stop = (second-first)+1
+    with nogil,parallel(num_threads=6):
+        for i in prange(first,stop):
+            with gil:
+                print(i,'      ',time.time()-start_time)
+                for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
+                    y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
+                    if val_T>0.6:
+                        disp[i][j] = 255
+                    else:
+                        disp[i][j] = j+start_index-x
            
-            ADC_val[i][j] = val_T
-            AD_val[i][j] = val_AD
-            Census_val[i][j] = val_C
+                    ADC_val[i][j] = val_T
+                    AD_val[i][j] = val_AD
+                    Census_val[i][j] = val_C
 
 
     return disp,ADC_val,AD_val,Census_val
-
-cdef find_col_BGR(numpy.ndarray[numpy.uint8_t,ndim = 3] col):
-    cdef int B,G,R,i
-    B=0
-    G=0
-    R=0
-
-    for i in range(len(col[0])):
-        B += col[0][i][0]
-
-    for i in range(len(col[0])):
-        G += col[0][i][1]
-
-    for i in range(len(col[0])):
-        R += col[0][i][2]
-
-        return B,G,R
-
-cdef int find_start_index(int B,int G,int R,numpy.ndarray[numpy.uint8_t,ndim = 3] imgL):
-    cdef int index,i,flag1,flag2,flag3,diff1,diff2,diff3,b,g,r
-    cdef numpy.ndarray[numpy.uint8_t,ndim = 3] col
-    index = 0
-
-    for i in range(300):
-        col = imgL[i:i+1,0:]
-        b,g,r = find_col_BGR(col)
-
-        if i== 0 :
-            flag1 = 0
-            flag2 = 0
-            flag3 = 0
-            diff1 = abs(B-b)
-            diff2 = abs(G-g)
-            diff3 = abs(R-r)
-        else:
-            if diff1> abs(B-b):
-                flag1 = 1
-                diff1 = abs(B-b)
-            else:
-                flag1 = 0
-
-            if diff2> abs(B-b):
-                flag2 = 1
-                diff2 = abs(G-g)
-            else:
-                flag2 = 0
-
-            if diff3> abs(B-b):
-                flag3 = 1
-                diff3 = abs(R-r)
-            else:
-                flag3 = 0
-
-        if flag1 == 1 and flag2 == 1 and flag3 ==1:
-            # print('all matches found:',i)
-            # print(diff1)
-            # print(diff2)
-            # print(diff3)
-            break
-        elif flag1 == 1 and flag2 == 1 or flag1 == 1 and flag3 == 1 or flag2 == 1 and flag3 == 1:
-            # print('two matches found:',i)
-            pass
-
-    index = i
-    return index
-
-
-
-
 
 cdef find_closest_match(int row,int column,numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uint8_t,ndim = 3] imgR):
     cdef int flag,row_found,column_found,j

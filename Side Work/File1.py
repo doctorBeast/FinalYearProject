@@ -144,9 +144,8 @@ import Disparity
 import cv2
 import pickle
 
-imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstLnew2.jpg',1)
-imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstRnew2.jpg',1)
-
+imgL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstLnew3.jpg',1)
+imgR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/Side Work/dstImages/dstRnew3.jpg',1)
 print(imgL.shape)
 print(imgR.shape)
 
