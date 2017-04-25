@@ -257,7 +257,7 @@ class Disparity:
     def cal_AD(self,rowL,colL,imgL,rowR,colR,imgR):
         cost = 0
         for i in range(3):
-            cost = int(imgL[rowL][colL][i]) - int(imgR[rowR][colR][i])
+            cost += int(imgL[rowL][colL][i]) - int(imgR[rowR][colR][i])
 
         cost /= 3
 

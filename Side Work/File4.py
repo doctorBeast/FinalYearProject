@@ -17,7 +17,7 @@
 # # Arrays to store object points and image points from all the images.
 # objpoints = [] # 3d point in real world space
 # imgpoints = [] # 2d points in image plane.
-# images = glob.glob('/home/doctorbeast/Desktop/Github/ImagesLeft/*.jpg')
+# images = glob.glob('/home/doctorbeast/Desktop/Github/ImagesLeftNew3/*.jpg')
 # i = 0
 # for fname in images:
 #     img = cv2.imread(fname)
@@ -35,7 +35,7 @@
 #         # Draw and display the corners
 #         img = cv2.drawChessboardCorners(img, (9,6), corners2,ret)
 #         cv2.imshow('img',img)
-#         cv2.waitKey(1)
+#         cv2.waitKey(0)
 #         i+=1
 
 #     else:
@@ -72,29 +72,29 @@
 
 # #code for stereocamera calibration
 
-# import pickle
-# import cv2
-# import numpy as np
+import pickle
+import cv2
+import numpy as np
 
-# # np.set_printoptions(threshold=np.nan)0
+# np.set_printoptions(threshold=np.nan)0
 
-# # img = cv2.imread('Images/img0.jpg',0)
-# # print(img.shape)
-# L = open('Leftdata.pickle','rb')
-# R = open('Rightdata.pickle','rb')
+L = open('Leftdata.pickle','rb')
+R = open('Rightdata.pickle','rb')
 
-# objL , imgL , cameraMatrix1, distCoeffs1 = pickle.load(L)
-# objR , imgR, cameraMatrix2 , distCoeffs2 = pickle.load(R)
+objL , imgL , cameraMatrix1, distCoeffs1 = pickle.load(L)
+objR , imgR, cameraMatrix2 , distCoeffs2 = pickle.load(R)
 
-# L.close()
-# R.close()
+L.close()
+R.close()
+print(cameraMatrix1)
+print(cameraMatrix2)
 
-# srcL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/BothNew/imgL6.jpg',1)
+# srcL = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/BothNew2/imgL1.jpg',1)
 # stereo_criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 100, 1e-5)
 
-
 # retval,cameraMatrix1,distCoeffs1,cameraMatrix2,distCoeffs2,R,T,E,F = cv2.stereoCalibrate(objectPoints = objL,imagePoints1 = imgL,imagePoints2 = imgR,imageSize = (640,480),cameraMatrix1 = cameraMatrix1,distCoeffs1 = distCoeffs1,cameraMatrix2 = cameraMatrix2,distCoeffs2 = distCoeffs2, criteria = stereo_criteria,flags = cv2.CALIB_FIX_INTRINSIC)
-
+# print(cameraMatrix1)
+# print(cameraMatrix2)
 # R1,R2,P1,P2,Q,ROI1,ROI2 = cv2.stereoRectify(cameraMatrix1 = cameraMatrix1,cameraMatrix2 = cameraMatrix2,distCoeffs1 = distCoeffs1,distCoeffs2 = distCoeffs2,imageSize = (640,480),R = R,T = T,flags = cv2.CALIB_ZERO_DISPARITY,alpha = -1)
 # #print(R1.shape,R2.shape,P1.shape,P2.shape,Q.shape)
 
@@ -107,7 +107,7 @@
 # # cv2.imshow('Final',dst)
 # # cv2.waitKey(0)
 
-# srcR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/BothNew/imgR6.jpg',1)
+# srcR = cv2.imread('/home/doctorbeast/Desktop/Github/FinalYearProject/BothNew2/imgR1.jpg',1)
 
 # map1 , map2 = cv2.initUndistortRectifyMap(cameraMatrix = cameraMatrix2, distCoeffs = distCoeffs2, R = R2, newCameraMatrix = P2, size = (640,480),m1type = cv2.CV_32FC1)
 # dstmap1 , dstmap2 = cv2.convertMaps(map1 = map1.astype(np.float32),map2 = map2.astype(np.float32),dstmap1type = cv2.CV_16SC2,nninterpolation = False)
@@ -120,8 +120,11 @@
 # w = min([wl,wr])
 # h = max([hl,hr])
 
-# dstL = dstL[yl+19:yl+hl,xl:xl+w]
-# dstR = dstR[yr:yr+hr-25,xr:xr+w]
+# # dstL = dstL[yl:yl+hl,xl:xl+wl]
+# # dstR = dstR[yr:yr+hr,xr:xr+wr]
+
+# # dstL = dstL[yl:yl+hl,xl:xl+w]
+# # dstR = dstR[yr:yr+hr,xr:xr+w]
 
 # # i = 0
 # # while True:
@@ -132,6 +135,8 @@
 # #     elif cv2.waitKey(1) & 0xFF == ord('p'):
 # #         i-=1
 
+# dstL = dstL[49:438,177:505]
+# dstR = dstR[49:438,177:505]
 # cv2.imshow('dstL',dstL)
 # cv2.imshow('dstR',dstR)
 # cv2.waitKey(0)
@@ -139,8 +144,8 @@
 # print(dstL.shape)
 # print(dstR.shape)
 
-# cv2.imwrite('dstImages/dstLnew6.jpg',dstL)
-# cv2.imwrite('dstImages/dstRnew6.jpg',dstR)
+# cv2.imwrite('dstImages/dstLnew1.jpg',dstL)
+# cv2.imwrite('dstImages/dstRnew1.jpg',dstR)
 
 # cv2.destroyAllWindows()
 

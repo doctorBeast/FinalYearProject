@@ -11,9 +11,9 @@ import cython
 
 cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
 
-minDisparity = 40
-maxDisparity = 260
-windowSize = 9       #Window size must be always taken odd
+minDisparity = 20          #MAKE CHANGES
+maxDisparity = 130           #MAKE CHANGES
+windowSize = 9      #Window size must be always taken odd
 lambda_Census = 30
 lambda_AD = 10
 
@@ -25,7 +25,7 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
     cdef int B,G,R,start_index,i,j,y,x,num_threads,first,second
     cdef float val_T,val_AD,val_C
     start_time = time.time()
-    start_index = 40
+    start_index = 35
     print(start_index)
     
     temp = imgL[0:,start_index:]
@@ -36,14 +36,14 @@ cpdef compute(numpy.ndarray[numpy.uint8_t,ndim = 3] imgL,numpy.ndarray[numpy.uin
     first = int((windowSize-1)/2)
     second = len(temp)
     stop = (second-first)+1
-    with nogil,parallel(num_threads=6):
+    with nogil,parallel(num_threads=4):
         for i in prange(first,stop):
             with gil:
                 print(i,'      ',time.time()-start_time)
                 for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
-                    if val_T>0.6:
-                        disp[i][j] = 255
+                    if val_T>0.3:
+                        disp[i][j] = 0
                     else:
                         disp[i][j] = j+start_index-x
            

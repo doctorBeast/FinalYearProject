@@ -1596,7 +1596,6 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
-static PyObject *__pyx_int_255;
 static PyObject *__pyx_slice_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_tuple__4;
@@ -1715,7 +1714,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
  *     cdef int B,G,R,start_index,i,j,y,x,num_threads,first,second
  *     cdef float val_T,val_AD,val_C
  *     start_time = time.time()             # <<<<<<<<<<<<<<
- *     start_index = 40
+ *     start_index = 35
  *     print(start_index)
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
@@ -1747,15 +1746,15 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
   /* "Disparity.pyx":28
  *     cdef float val_T,val_AD,val_C
  *     start_time = time.time()
- *     start_index = 40             # <<<<<<<<<<<<<<
+ *     start_index = 35             # <<<<<<<<<<<<<<
  *     print(start_index)
  * 
  */
-  __pyx_v_start_index = 40;
+  __pyx_v_start_index = 35;
 
   /* "Disparity.pyx":29
  *     start_time = time.time()
- *     start_index = 40
+ *     start_index = 35
  *     print(start_index)             # <<<<<<<<<<<<<<
  * 
  *     temp = imgL[0:,start_index:]
@@ -2052,7 +2051,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
  *     first = int((windowSize-1)/2)
  *     second = len(temp)             # <<<<<<<<<<<<<<
  *     stop = (second-first)+1
- *     with nogil,parallel(num_threads=6):
+ *     with nogil,parallel(num_threads=4):
  */
   __pyx_t_12 = PyObject_Length(__pyx_v_temp); if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 37, __pyx_L1_error)
   __pyx_v_second = __pyx_t_12;
@@ -2061,7 +2060,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
  *     first = int((windowSize-1)/2)
  *     second = len(temp)
  *     stop = (second-first)+1             # <<<<<<<<<<<<<<
- *     with nogil,parallel(num_threads=6):
+ *     with nogil,parallel(num_threads=4):
  *         for i in prange(first,stop):
  */
   __pyx_v_stop = ((__pyx_v_second - __pyx_v_first) + 1);
@@ -2069,7 +2068,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
   /* "Disparity.pyx":39
  *     second = len(temp)
  *     stop = (second-first)+1
- *     with nogil,parallel(num_threads=6):             # <<<<<<<<<<<<<<
+ *     with nogil,parallel(num_threads=4):             # <<<<<<<<<<<<<<
  *         for i in prange(first,stop):
  *             with gil:
  */
@@ -2091,7 +2090,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
                 #define unlikely(x) (x)
             #endif
             #ifdef _OPENMP
-            #pragma omp parallel  private(__pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_15, __pyx_t_16, __pyx_t_17, __pyx_t_20, __pyx_t_21, __pyx_t_22, __pyx_t_23, __pyx_t_24, __pyx_t_25, __pyx_t_26, __pyx_t_7) firstprivate(__pyx_t_1, __pyx_t_18, __pyx_t_19, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5) private(__pyx_filename, __pyx_lineno, __pyx_clineno) shared(__pyx_parallel_why, __pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb) num_threads(6)
+            #pragma omp parallel  private(__pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_15, __pyx_t_16, __pyx_t_17, __pyx_t_20, __pyx_t_21, __pyx_t_22, __pyx_t_23, __pyx_t_24, __pyx_t_25, __pyx_t_26, __pyx_t_7) firstprivate(__pyx_t_1, __pyx_t_18, __pyx_t_19, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5) private(__pyx_filename, __pyx_lineno, __pyx_clineno) shared(__pyx_parallel_why, __pyx_parallel_exc_type, __pyx_parallel_exc_value, __pyx_parallel_exc_tb) num_threads(4)
             #endif /* _OPENMP */
             {
                 #ifdef _OPENMP
@@ -2103,7 +2102,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
 
                 /* "Disparity.pyx":40
  *     stop = (second-first)+1
- *     with nogil,parallel(num_threads=6):
+ *     with nogil,parallel(num_threads=4):
  *         for i in prange(first,stop):             # <<<<<<<<<<<<<<
  *             with gil:
  *                 print(i,'      ',time.time()-start_time)
@@ -2142,7 +2141,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
                                 __pyx_v_y = ((int)0xbad0bad0);
 
                                 /* "Disparity.pyx":41
- *     with nogil,parallel(num_threads=6):
+ *     with nogil,parallel(num_threads=4):
  *         for i in prange(first,stop):
  *             with gil:             # <<<<<<<<<<<<<<
  *                 print(i,'      ',time.time()-start_time)
@@ -2208,7 +2207,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
  *                 print(i,'      ',time.time()-start_time)
  *                 for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):             # <<<<<<<<<<<<<<
  *                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
- *                     if val_T>0.6:
+ *                     if val_T>0.3:
  */
                                       __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_temp, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L17_error)
                                       __Pyx_GOTREF(__pyx_t_3);
@@ -2242,8 +2241,8 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
  *                 print(i,'      ',time.time()-start_time)
  *                 for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
  *                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion             # <<<<<<<<<<<<<<
- *                     if val_T>0.6:
- *                         disp[i][j] = 255
+ *                     if val_T>0.3:
+ *                         disp[i][j] = 0
  */
                                         __pyx_t_4 = __pyx_f_9Disparity_find_closest_match(__pyx_v_i, (__pyx_v_j + __pyx_v_start_index), ((PyArrayObject *)__pyx_v_imgL), ((PyArrayObject *)__pyx_v_imgR)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L17_error)
                                         __Pyx_GOTREF(__pyx_t_4);
@@ -2332,37 +2331,37 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
                                         /* "Disparity.pyx":45
  *                 for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
  *                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
- *                     if val_T>0.6:             # <<<<<<<<<<<<<<
- *                         disp[i][j] = 255
+ *                     if val_T>0.3:             # <<<<<<<<<<<<<<
+ *                         disp[i][j] = 0
  *                     else:
  */
-                                        __pyx_t_26 = ((__pyx_v_val_T > 0.6) != 0);
+                                        __pyx_t_26 = ((__pyx_v_val_T > 0.3) != 0);
                                         if (__pyx_t_26) {
 
                                           /* "Disparity.pyx":46
  *                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
- *                     if val_T>0.6:
- *                         disp[i][j] = 255             # <<<<<<<<<<<<<<
+ *                     if val_T>0.3:
+ *                         disp[i][j] = 0             # <<<<<<<<<<<<<<
  *                     else:
  *                         disp[i][j] = j+start_index-x
  */
                                           __pyx_t_4 = __Pyx_GetItemInt(((PyObject *)__pyx_v_disp), __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L17_error)
                                           __Pyx_GOTREF(__pyx_t_4);
-                                          if (unlikely(__Pyx_SetItemInt(__pyx_t_4, __pyx_v_j, __pyx_int_255, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 46, __pyx_L17_error)
+                                          if (unlikely(__Pyx_SetItemInt(__pyx_t_4, __pyx_v_j, __pyx_int_0, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 46, __pyx_L17_error)
                                           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
                                           /* "Disparity.pyx":45
  *                 for j in range(int((windowSize-1)/2),len(temp[0])-int(((windowSize-1)/2))+1):
  *                     y , x , val_T,val_AD,val_C = find_closest_match(i,j+start_index,imgL,imgR)           #Define this funtion
- *                     if val_T>0.6:             # <<<<<<<<<<<<<<
- *                         disp[i][j] = 255
+ *                     if val_T>0.3:             # <<<<<<<<<<<<<<
+ *                         disp[i][j] = 0
  *                     else:
  */
                                           goto __pyx_L23;
                                         }
 
                                         /* "Disparity.pyx":48
- *                         disp[i][j] = 255
+ *                         disp[i][j] = 0
  *                     else:
  *                         disp[i][j] = j+start_index-x             # <<<<<<<<<<<<<<
  * 
@@ -2427,7 +2426,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
                                     }
 
                                     /* "Disparity.pyx":41
- *     with nogil,parallel(num_threads=6):
+ *     with nogil,parallel(num_threads=4):
  *         for i in prange(first,stop):
  *             with gil:             # <<<<<<<<<<<<<<
  *                 print(i,'      ',time.time()-start_time)
@@ -2602,7 +2601,7 @@ static PyObject *__pyx_f_9Disparity_compute(PyArrayObject *__pyx_v_imgL, PyArray
       /* "Disparity.pyx":39
  *     second = len(temp)
  *     stop = (second-first)+1
- *     with nogil,parallel(num_threads=6):             # <<<<<<<<<<<<<<
+ *     with nogil,parallel(num_threads=4):             # <<<<<<<<<<<<<<
  *         for i in prange(first,stop):
  *             with gil:
  */
@@ -6923,7 +6922,6 @@ if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_255 = PyInt_FromLong(255); if (unlikely(!__pyx_int_255)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -7093,33 +7091,33 @@ PyMODINIT_FUNC PyInit_Disparity(void)
   /* "Disparity.pyx":14
  * cdef int minDisparity,maxDisparity,windowSize,lambda_Census,lambda_AD
  * 
- * minDisparity = 40             # <<<<<<<<<<<<<<
- * maxDisparity = 260
- * windowSize = 9       #Window size must be always taken odd
+ * minDisparity = 20          #MAKE CHANGES             # <<<<<<<<<<<<<<
+ * maxDisparity = 130           #MAKE CHANGES
+ * windowSize = 9      #Window size must be always taken odd
  */
-  __pyx_v_9Disparity_minDisparity = 40;
+  __pyx_v_9Disparity_minDisparity = 20;
 
   /* "Disparity.pyx":15
  * 
- * minDisparity = 40
- * maxDisparity = 260             # <<<<<<<<<<<<<<
- * windowSize = 9       #Window size must be always taken odd
+ * minDisparity = 20          #MAKE CHANGES
+ * maxDisparity = 130           #MAKE CHANGES             # <<<<<<<<<<<<<<
+ * windowSize = 9      #Window size must be always taken odd
  * lambda_Census = 30
  */
-  __pyx_v_9Disparity_maxDisparity = 0x104;
+  __pyx_v_9Disparity_maxDisparity = 0x82;
 
   /* "Disparity.pyx":16
- * minDisparity = 40
- * maxDisparity = 260
- * windowSize = 9       #Window size must be always taken odd             # <<<<<<<<<<<<<<
+ * minDisparity = 20          #MAKE CHANGES
+ * maxDisparity = 130           #MAKE CHANGES
+ * windowSize = 9      #Window size must be always taken odd             # <<<<<<<<<<<<<<
  * lambda_Census = 30
  * lambda_AD = 10
  */
   __pyx_v_9Disparity_windowSize = 9;
 
   /* "Disparity.pyx":17
- * maxDisparity = 260
- * windowSize = 9       #Window size must be always taken odd
+ * maxDisparity = 130           #MAKE CHANGES
+ * windowSize = 9      #Window size must be always taken odd
  * lambda_Census = 30             # <<<<<<<<<<<<<<
  * lambda_AD = 10
  * 
@@ -7127,7 +7125,7 @@ PyMODINIT_FUNC PyInit_Disparity(void)
   __pyx_v_9Disparity_lambda_Census = 30;
 
   /* "Disparity.pyx":18
- * windowSize = 9       #Window size must be always taken odd
+ * windowSize = 9      #Window size must be always taken odd
  * lambda_Census = 30
  * lambda_AD = 10             # <<<<<<<<<<<<<<
  * 
